@@ -15,7 +15,8 @@
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="MIKENUG APP" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script >
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -44,8 +45,15 @@
         </div>
     </div>
 
+    <div class="league-image" style="display: none;">
+        <img src="/imgs/athens-league.webp" alt="Athens League">
+    </div>
+
     <div class="leaderboard" style="display: none;">
-        <h2>🏆 Leaderboard</h2>
+        <!-- <div class="league-image">
+            <img src="/imgs/athens-league.webp" alt="Athens League" width="50px">
+        </div> -->
+        <h2> <img src="/imgs/trophy-svgrepo-com.svg" alt="Trophy" width="22px"> Leaderboard</h2>
         <div class="leaderboard-container">
             <!-- Table Headers -->
             <div class="leaderboard-header">
@@ -70,13 +78,13 @@
 
 <script>
 
-function loading() {
-    setTimeout(() => {
-        $(".loading-screen").fadeOut("fast", () => {
-            connect();
-        });
-    },2700)
-}
+    function loading() {
+        setTimeout(() => {
+            $(".loading-screen").fadeOut("fast", () => {
+                connect();
+            });
+        }, 2700)
+    }
     function isPhone() {
         return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
     }
@@ -101,6 +109,7 @@ function loading() {
                 if (status === "Servers Up") {
                     loadTeams()
                     // document.querySelector(".leaderboard").style.removeProperty("display");
+                    $(".league-image").fadeIn("fast")
                     $(".leaderboard").fadeIn("fast")
                 }
             })
@@ -112,7 +121,7 @@ function loading() {
                         .then((response) => response.text())
                         .then((status) => {
                             clearInterval(retryInt);
-                            for(let i=0; i < 5; i++) {
+                            for (let i = 0; i < 5; i++) {
                                 $(".loader__bar")[i].style.background = "#5ce65c";
                             }
                             $(".offline-text span")[0].innerHTML = "Successfully reconnected!"
@@ -133,8 +142,7 @@ function loading() {
         fetch(`${link}/getLeague`)
             .then(response => response.text())
             .then(async (data) => {
-                console.log(data)
-                const {team1, team2, team3, team4, team5} = JSON.parse(data)
+                const { team1, team2, team3, team4, team5 } = JSON.parse(data);
                 document.querySelector(".leaderboard-container").innerHTML = `
                 <div class="leaderboard-header">
                     <span class="rank">#</span>
@@ -146,7 +154,7 @@ function loading() {
                     <span class="points">Pts</span>
                 </div>
                 
-                <div class="leaderboard-row first">
+                <div class="leaderboard-row first" id="${team1.name.toLowerCase().split(" ")[0]}">
                     <span class="rank">1</span>
                     <span class="name">
                         <img src="${team1.image.replaceAll("\"", "")}" class="profile-img">
@@ -158,7 +166,7 @@ function loading() {
                     <span class="gd">${team1.goalDifference}</span>
                     <span class="points">${team1.points}</span>
                 </div>
-                <div class="leaderboard-row second">
+                <div class="leaderboard-row second"  id="${team2.name.toLowerCase().split(" ")[0]}">
                     <span class="rank">2</span>
                     <span class="name">
                         <img src="${team2.image.replaceAll("\"", "")}" class="profile-img">
@@ -170,7 +178,7 @@ function loading() {
                     <span class="gd">${team2.goalDifference}</span>
                     <span class="points">${team2.points}</span>
                 </div>
-                <div class="leaderboard-row third">
+                <div class="leaderboard-row third"  id="${team3.name.toLowerCase().split(" ")[0]}">
                     <span class="rank">3</span>
                     <span class="name">
                         <img src="${team3.image.replaceAll("\"", "")}" class="profile-img">
@@ -182,7 +190,7 @@ function loading() {
                     <span class="gd">${team3.goalDifference}</span>
                     <span class="points">${team3.points}</span>
                 </div>
-                <div class="leaderboard-row">
+                <div class="leaderboard-row"  id="${team4.name.toLowerCase().split(" ")[0]}">
                     <span class="rank">4</span>
                     <span class="name">
                         <img src="${team4.image.replaceAll("\"", "")}" class="profile-img">
@@ -194,7 +202,7 @@ function loading() {
                     <span class="gd">${team4.goalDifference}</span>
                     <span class="points">${team4.points}</span>
                 </div>
-                <div class="leaderboard-row">
+                <div class="leaderboard-row"  id="${team5.name.toLowerCase().split(" ")[0]}">
                     <span class="rank">5</span>
                     <span class="name">
                         <img src="${team5.image.replaceAll("\"", "")}" class="profile-img">
