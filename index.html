@@ -1,0 +1,215 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>MIKENUG FC</title>
+    <link rel="stylesheet" href="./css/main.css" />
+    <link rel="stylesheet" href="./css/offline.css" />
+    <link rel="apple-touch-icon" sizes="180x180" href="./imgs/icon.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="180x180" href="./imgs/icon.png" />
+    <link rel="icon" type="image/png" href="./imgs/icon.png" />
+    <meta name="msapplication-TileColor" content="#da532c" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="cyan" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="black" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="MIKENUG APP" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+
+<body>
+
+    <div class="loading-screen" style="display: none;">
+        <img src="imgs/mikenug.png" alt="Mikenug" width="235" height="250">
+    </div>
+    <div class="offline-screen" style="display: none;" id="offline-screen">
+        <div class="offline-text">
+            <div class="loader">
+                <div class="loader__bar"></div>
+                <div class="loader__bar"></div>
+                <div class="loader__bar"></div>
+                <div class="loader__bar"></div>
+                <div class="loader__bar"></div>
+                <div class="loader__ball"></div>
+            </div>
+            <span>Servers Offline! Trying to reconnect!</span>
+        </div>
+    </div>
+    <div class="not-phone" style="display: none;">
+        <div class="warning-container">
+            <img src="./imgs/warning-circle-svgrepo-com.svg" alt="Warning" width="100px" height="100px"
+                class="not-phone-warning"></i>
+            <span class="not-phone-text">DEVICE NOT SUPPORTED</span>
+        </div>
+    </div>
+
+    <div class="leaderboard" style="display: none;">
+        <h2>🏆 Leaderboard</h2>
+        <div class="leaderboard-container">
+            <!-- Table Headers -->
+            <div class="leaderboard-header">
+                <span class="rank">#</span>
+                <span class="name">Team</span>
+                <span class="wins">W</span>
+                <span class="draws">D</span>
+                <span class="losses">L</span>
+                <span class="gd">GD</span>
+                <span class="points">Pts</span>
+            </div>
+
+            <!-- Skeleton loading state -->
+            <div class="leaderboard-row skeleton"></div>
+            <div class="leaderboard-row skeleton"></div>
+            <div class="leaderboard-row skeleton"></div>
+            <div class="leaderboard-row skeleton"></div>
+            <div class="leaderboard-row skeleton"></div>
+        </div>
+    </div>
+</body>
+
+<script>
+
+function loading() {
+    setTimeout(() => {
+        $(".loading-screen").fadeOut("fast", () => {
+            connect();
+        });
+    },2700)
+}
+    function isPhone() {
+        return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    }
+
+    if (!isPhone()) {
+        document.querySelector(".not-phone").style.removeProperty("display");
+    } else {
+        document.querySelector(".loading-screen").style.removeProperty("display");
+        loading();
+    }
+    let retryInt;
+    let link = "https://mikenug-server-new.onrender.com";
+    function connect() {
+        fetch(`${link}/`)
+            .then((response) => response.text())
+            .then(async (status) => {
+                try {
+                    clearInterval(retryInt);
+                } catch (error) {
+                    console.log("Ignoring undefined interval");
+                }
+                if (status === "Servers Up") {
+                    loadTeams()
+                    // document.querySelector(".leaderboard").style.removeProperty("display");
+                    $(".leaderboard").fadeIn("fast")
+                }
+            })
+            .catch((e) => {
+                console.error("Server offline!");
+                document.getElementById("offline-screen").style.display = "flex";
+                retryInt = setInterval(function () {
+                    fetch(`${link}/`)
+                        .then((response) => response.text())
+                        .then((status) => {
+                            clearInterval(retryInt);
+                            for(let i=0; i < 5; i++) {
+                                $(".loader__bar")[i].style.background = "#5ce65c";
+                            }
+                            $(".offline-text span")[0].innerHTML = "Successfully reconnected!"
+                            setTimeout(() => {
+                                document.getElementById("offline-screen").style.display = "none";
+                                connect();
+                            }, 1500)
+                        })
+                        .catch((error) => {
+                            console.log("Still Offline");
+                        });
+                }, 2000);
+                console.log("Error:", error);
+            });
+    }
+
+    function loadTeams() {
+        fetch(`${link}/getLeague`)
+            .then(response => response.text())
+            .then(async (data) => {
+                console.log(data)
+                const {team1, team2, team3, team4, team5} = JSON.parse(data)
+                document.querySelector(".leaderboard-container").innerHTML = `
+                <div class="leaderboard-header">
+                    <span class="rank">#</span>
+                    <span class="name">Team</span>
+                    <span class="wins">W</span>
+                    <span class="draws">D</span>
+                    <span class="losses">L</span>
+                    <span class="gd">GD</span>
+                    <span class="points">Pts</span>
+                </div>
+                
+                <div class="leaderboard-row first">
+                    <span class="rank">1</span>
+                    <span class="name">
+                        <img src="${team1.image.replaceAll("\"", "")}" class="profile-img">
+                        ${team1.name}
+                    </span>
+                    <span class="wins">${team1.wins}</span>
+                    <span class="draws">${team1.draws}</span>
+                    <span class="losses">${team1.looses}</span>
+                    <span class="gd">${team1.goalDifference}</span>
+                    <span class="points">${team1.points}</span>
+                </div>
+                <div class="leaderboard-row second">
+                    <span class="rank">2</span>
+                    <span class="name">
+                        <img src="${team2.image.replaceAll("\"", "")}" class="profile-img">
+                        ${team2.name}
+                    </span>
+                    <span class="wins">${team2.wins}</span>
+                    <span class="draws">${team2.draws}</span>
+                    <span class="losses">${team2.looses}</span>
+                    <span class="gd">${team2.goalDifference}</span>
+                    <span class="points">${team2.points}</span>
+                </div>
+                <div class="leaderboard-row third">
+                    <span class="rank">3</span>
+                    <span class="name">
+                        <img src="${team3.image.replaceAll("\"", "")}" class="profile-img">
+                        ${team3.name}
+                    </span>
+                    <span class="wins">${team3.wins}</span>
+                    <span class="draws">${team3.draws}</span>
+                    <span class="losses">${team3.looses}</span>
+                    <span class="gd">${team3.goalDifference}</span>
+                    <span class="points">${team3.points}</span>
+                </div>
+                <div class="leaderboard-row">
+                    <span class="rank">4</span>
+                    <span class="name">
+                        <img src="${team4.image.replaceAll("\"", "")}" class="profile-img">
+                        ${team4.name}
+                    </span>
+                    <span class="wins">${team4.wins}</span>
+                    <span class="draws">${team4.draws}</span>
+                    <span class="losses">${team4.looses}</span>
+                    <span class="gd">${team4.goalDifference}</span>
+                    <span class="points">${team4.points}</span>
+                </div>
+                <div class="leaderboard-row">
+                    <span class="rank">5</span>
+                    <span class="name">
+                        <img src="${team5.image.replaceAll("\"", "")}" class="profile-img">
+                        ${team5.name}
+                    </span>
+                    <span class="wins">${team5.wins}</span>
+                    <span class="draws">${team5.draws}</span>
+                    <span class="losses">${team5.looses}</span>
+                    <span class="gd">${team5.goalDifference}</span>
+                    <span class="points">${team5.points}</span>
+                </div>
+            `;
+            })
+    }
+    window.onload = isPhone;
+</script>
+
+</html>
