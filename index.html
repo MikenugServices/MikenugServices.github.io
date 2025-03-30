@@ -10,12 +10,13 @@
     <link rel="apple-touch-icon-precomposed" sizes="180x180" href="./imgs/icon.png" />
     <link rel="icon" type="image/png" href="./imgs/mikenug.png" />
     <meta name="msapplication-TileColor" content="#da532c" />
-    <meta name="theme-color" media="(prefers-color-scheme: light)" content="cyan" />
-    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="black" />
+    <!-- <meta name="theme-color" media="(prefers-color-scheme: light)" content="cyan" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="black" /> -->
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="MIKENUG APP" />
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> -->
+    <meta name="theme-color" content="#181818">
 </head>
 
 <body>
@@ -94,7 +95,7 @@
         <div class="info-container">
             <p style="font-weight: bold;">Ip Adress:<span id="ipAdress" style="color: rgba(255, 255, 255, 0.774);font-weight: normal;"></span></p>
             <p  style="font-weight: bold;">Device Type:<span id="DeviceInfo"  style="color: rgba(255, 255, 255, 0.774);font-weight: normal;"></span></p>
-            <p  style="font-weight: bold;">App Version:<span style="color: rgba(255, 255, 255, 0.774);font-weight: normal;"> 1.8</span></p>
+            <p  style="font-weight: bold;">App Version:<span style="color: rgba(255, 255, 255, 0.774);font-weight: normal;"> 1.9</span></p>
         </div>
     </div>
 </body>
@@ -135,11 +136,13 @@
                     setTimeout(() => {
                         const leaderboard = document.getElementById("leaderboard");
                         const leagueImage = document.getElementById("league-image");
-                        const buttonContainer = document.getElementById("button-container")
+                        const buttonContainer = document.getElementById("button-container");
+                        const metaThemeColor = document.querySelector("meta[name=theme-color]");
                         buttonContainer.className = `${buttonContainer.className} fadeIn`;
                         leaderboard.className = `${leaderboard.className} fadeIn`;
                         document.querySelector(".leaderboard").style.removeProperty("display");
                         document.querySelector(".button-container").style.removeProperty("display");
+                        metaThemeColor.setAttribute('content', "#1e1e2e");
                         // $(".league-image").fadeIn("fast")
                         leagueImage.className = `${leagueImage.className} fadeIn`;
                         document.querySelector(".league-image").style.removeProperty("display");
