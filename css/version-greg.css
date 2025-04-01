@@ -1,15 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap'); */
+@font-face {
+    font-family: SanFransisco;
+    src: url("/fonts/SFPRODISPLAYREGULAR.OTF") format("opentype");
+}
 
 body {
     height: 100vh;
     width: 100%;
-    background-color: #181818;
+    background-color: #141414;
     display: flex;
     justify-content: center;
     align-items: center;
     overscroll-behavior: contain;
     flex-direction: column;
-    font-family: "Josefin Sans", serif;
+    font-family: SanFransisco;
     margin: 0;
 }
 
@@ -68,10 +72,11 @@ body {
 .leaderboard {
     /* width: 100%; */
     /* margin: 50px auto; */
-    background: #1e1e2e;
+    /* background: #1e1e2e; */
+    background: #141414;
     color: white;
     text-align: center;
-    padding: 5px;
+    padding: 10px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     /* font-family: Arial, sans-serif; */
@@ -79,6 +84,10 @@ body {
     visibility: hidden;
     opacity: 0;
     transition: opacity 250ms ease-in, visibility 0ms ease-in 250ms;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .leaderboard h2 {
@@ -104,13 +113,14 @@ body {
 /* Header styling */
 .leaderboard-header {
     display: flex;
-    justify-content: space-between;
     padding: 10px;
     font-weight: bold;
-    background: #28283e;
+    /* background: #28283e; */
+    background: #1f1f1f;
     border-radius: 5px;
-    margin-bottom: 5px;
-    /* max-width: 95%; */
+    margin-bottom: 18px;
+    height: 20px;
+    align-items: end;
 }
 
 .leaderboard-row {
@@ -120,18 +130,19 @@ body {
     padding: 10px;
     border: 0px solid transparent;
     border-radius: 5px;
-    background: #2a2a3c;
     /* background: #2a2a3c; */
-    margin-bottom: 5px;
-    font-size: 10px;
-    height: 42px;
+    background: #1c1c1c;
+    /* background: #2a2a3c; */
+    margin-bottom: 20px;
+    font-size: 12px;
+    height: 50px;
     /* max-width: 95%; */
 }
 
 /* Profile image */
 .profile-img {
-    width: 35px;
-    height: 35px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     object-fit: cover;
     border: 2px solid white;
@@ -164,7 +175,8 @@ body {
 }
 
 .fourth {
-    background: #3f3f58;
+    /* background: #3f3f58; */
+    background: #2e2e2e;
 }
 
 /* Column styling */
@@ -194,8 +206,9 @@ body {
 
 /* Skeleton Loader */
 .skeleton {
-    height: 42px;
-    background: linear-gradient(90deg, #2a2a3c 25%, #3a3a4e 50%, #2a2a3c 75%);
+    height: 50px;
+    /* background: linear-gradient(90deg, #2a2a3c 25%, #3a3a4e 50%, #2a2a3c 75%); */
+    background: linear-gradient(90deg, rgba(42,42,44,1) 25%, rgba(58,58,62,1) 50%, rgba(42,42,44,1) 75%);
     background-size: 200% 100%;
     animation: loading 1.5s infinite;
     border-radius: 5px;
@@ -231,7 +244,7 @@ body {
 
 #mikenug {
     height: 40px;
-    border: 2px solid #ad9b64 !important;
+    border: 1px solid #ad9b64 !important;
     box-shadow: 0 0 4px 2px #ad9b64;
 }
 
