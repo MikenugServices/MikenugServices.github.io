@@ -7,7 +7,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    overscroll-behavior: contain;
     flex-direction: column;
     font-family: "Josefin Sans", serif;
     margin: 0;

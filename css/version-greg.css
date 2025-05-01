@@ -78,7 +78,7 @@ body {
     text-align: center;
     padding: 10px;
     border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); */
     /* font-family: Arial, sans-serif; */
     width: 96%;
     visibility: hidden;
@@ -413,4 +413,39 @@ body {
     to {
       transform: translateX(-100%);
     }
+  }
+
+  .org-change {
+    color: yellow;
+    z-index: 1;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 2px solid yellow;
+    padding: 10px;
+  }
+
+  .blur {
+    filter: blur(5px);
+  }
+
+  .notification-button {
+    display: flex;
+    align-self: flex-end;
+  }
+
+  #notification-btn {
+    border-radius: 50%;
+    padding: 5px;
+    margin-right: 8px;
+    margin-top: 4px;
+    background-color: #141414;
+    border: 2px solid white;
+    transition: background-color 1s;
+  }
+
+  #notification-btn:hover, #notification-btn:active {
+    background-color: #ad9b64;
+    transition: background-color 1s;
   }
