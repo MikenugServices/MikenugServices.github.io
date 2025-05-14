@@ -208,23 +208,6 @@
     }
 
     function loadTeams() {
-        document.querySelector(".leaderboard-container").innerHTML = `
-                <div class="leaderboard-header">
-                <span class="rank">#</span>
-                <span class="name">Team</span>
-                <span class="wins">W</span>
-                <span class="draws">D</span>
-                <span class="losses">L</span>
-                <span class="gd">GD</span>
-                <span class="points">Pts</span>
-            </div>
-
-            <!-- Skeleton loading state -->
-            <div class="leaderboard-row skeleton"></div>
-            <div class="leaderboard-row skeleton"></div>
-            <div class="leaderboard-row skeleton"></div>
-            <div class="leaderboard-row skeleton"></div>
-            <div class="leaderboard-row skeleton"></div>`
         fetch(`${link}/getLeague`)
             .then(response => response.text())
             .then(async (data) => {
@@ -236,6 +219,16 @@
                                 const svg = document.querySelector("#org-title").getElementsByTagName("svg")[0].outerHTML;
                 document.querySelector("#org-title").innerHTML = `${svg} ${name.split("2")[0]}`;
                 const json = JSON.parse(data)[name];
+                        document.querySelector(".leaderboard-container").innerHTML = `
+                <div class="leaderboard-header">
+                <span class="rank">#</span>
+                <span class="name">Team</span>
+                <span class="wins">W</span>
+                <span class="draws">D</span>
+                <span class="losses">L</span>
+                <span class="gd">GD</span>
+                <span class="points">Pts</span>
+            </div>`
                 for (let index = 0; index < Object.keys(json).length; index++) {
                     const element = Object.values(json)[index];
                     let rank = "";
