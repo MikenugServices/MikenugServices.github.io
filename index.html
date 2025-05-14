@@ -209,16 +209,22 @@
 
     function loadTeams() {
         document.querySelector(".leaderboard-container").innerHTML = `
-                                    <div class="leaderboard-header">
-                    <span class="rank">#</span>
-                    <span class="name">Team</span>
-                    <span class="wins">W</span>
-                    <span class="draws">D</span>
-                    <span class="losses">L</span>
-                    <span class="gd">GD</span>
-                    <span class="points">Pts</span>
-                </div>
-                    `
+                <div class="leaderboard-header">
+                <span class="rank">#</span>
+                <span class="name">Team</span>
+                <span class="wins">W</span>
+                <span class="draws">D</span>
+                <span class="losses">L</span>
+                <span class="gd">GD</span>
+                <span class="points">Pts</span>
+            </div>
+
+            <!-- Skeleton loading state -->
+            <div class="leaderboard-row skeleton"></div>
+            <div class="leaderboard-row skeleton"></div>
+            <div class="leaderboard-row skeleton"></div>
+            <div class="leaderboard-row skeleton"></div>
+            <div class="leaderboard-row skeleton"></div>`
         fetch(`${link}/getLeague`)
             .then(response => response.text())
             .then(async (data) => {
