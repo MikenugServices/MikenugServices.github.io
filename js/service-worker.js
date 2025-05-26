@@ -15,7 +15,7 @@ const urlBase64ToUint8Array = base64String => {
 }
 
 const saveSubscription = async (subscription) => {
-    const response = await fetch('http://192.168.2.20:8080/save-subs', {
+    const response = await fetch('https://mikenug-server-new.onrender.com/save-subs', {
         method: 'post',
         headers: { 'Content-type': "application/json" },
         body: JSON.stringify({
