@@ -35,9 +35,8 @@ self.addEventListener("activate", async (e) => {
 })
 
 self.addEventListener("push", e => {
-    let name = "Wohoo!!";
-    let payload = e.data.text()
-    self.registration.showNotification(payload);
+    let payload = JSON.parse(e.data.text())
+    self.registration.showNotification(payload.title, payload);
 })
 
 self.addEventListener('notificationclick', function (event) {
