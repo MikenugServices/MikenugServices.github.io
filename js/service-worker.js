@@ -33,7 +33,7 @@ self.addEventListener("activate", async (e) => {
             const response = await saveSubscription(subscription);
             console.log(response)
             if(response === "Successfully saved") {
-                self.registration.showNotification("MIKENUG FC", {
+                self.registration.showNotification("Activation complete", {
                     body: "Notifications enabled!",
                     icon: "https://mikenug.halalas-services.xyz/imgs/mikenug.png"
                 })
