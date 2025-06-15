@@ -71,7 +71,7 @@
         <div class="league-image" style="display: none;" id="league-image">
             <img src="/imgs/athens-league.webp" alt="Athens League">
         </div>
-        <h2 id="org-title"><svg width="24px" height="24px" viewBox="0 0 1024 1024" class="icon" version="1.1"
+        <h2 id="org-title" class="loading"><svg width="24px" height="24px" viewBox="0 0 1024 1024" class="icon" version="1.1"
                 xmlns="http://www.w3.org/2000/svg" fill="#000000">
                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                 <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -128,7 +128,7 @@
 </body>
 
 <script>
-    let link = "https://mikenug-server-new.onrender.com";
+    let link = "http://192.168.2.2:8080"//"https://mikenug-server-new.onrender.com";
     function loading() {
         if (connect() === "READY") {
             setTimeout(() => {
@@ -217,6 +217,7 @@
                     localStorage.setItem("lastOrg", name)
                 };
                                 const svg = document.querySelector("#org-title").getElementsByTagName("svg")[0].outerHTML;
+                                document.querySelector("#org-title").classList.remove("loading")
                 document.querySelector("#org-title").innerHTML = `${svg} ${name.split("2")[0]}`;
                 const json = JSON.parse(data)[name];
                         document.querySelector(".leaderboard-container").innerHTML = `

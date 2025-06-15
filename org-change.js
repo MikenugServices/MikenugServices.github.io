@@ -1,7 +1,7 @@
 const doc = document.getElementById("org-title");
 const org_change = document.querySelector(".org-menu");
 doc.onclick = showMenu;
-let linko = "https://mikenug-server-new.onrender.com";
+let linko = "http://192.168.2.2:8080"//"https://mikenug-server-new.onrender.com";
 
 function showMenu() {
     // org_change.style.removeProperty("display");

@@ -516,3 +516,9 @@ body {
 .org-menu span {
   border: 1px solid white;
 }
+
+/* cant use organisation selection when title is loading */
+
+.loading {
+  user-select: none;
+}
