@@ -51,6 +51,12 @@
                 width="35px">
         </button>
     </div>
+
+        <div class="show-winner-button" style="display: none;">
+        <button id="show-winner-btn" onclick="showWinner()"><img src="/imgs/medal-star-svgrepo-com.svg" alt="Winner"
+                width="35px">
+        </button>
+    </div>
     <!-- <div class="button-container" style="display: none;" id="button-container">
         <div class="connection-button">
             <button id="connection-btn"><img src="/imgs/network-wireless-svgrepo-com.svg" alt="Info" width="35px">
@@ -105,7 +111,7 @@
         </div>
     </div>
 
-    <div class="info-page sliding" id="info-page">
+    <div class="info-page sliding" id="info-page" style="display: none;">
         <button id="back-btn" onclick="HideInfo()"><img src="/imgs/back-svgrepo-com.svg" alt="Back" width="35px">
         </button>
         <p style="font-weight: bold;padding-bottom: 10px;">Mikenug App</p>
@@ -125,10 +131,15 @@
         <h2>Leagues</h2>
         <span></span>
     </div>
+        <div class="show-winner" style="display: none;">
+        <h2>Winner</h2>
+        <hr>
+        <span></span>
+    </div>
 </body>
 
 <script>
-    let link = "https://mikenug-server-new.onrender.com";
+    let link = "http://192.168.1.13:8080"//"https://mikenug-server-new.onrender.com";
     function loading() {
         if (connect() === "READY") {
             setTimeout(() => {
@@ -175,6 +186,7 @@
                         leagueImage.className = `${leagueImage.className} fadeIn`;
                         document.querySelector(".league-image").style.removeProperty("display");
                         document.querySelector(".notification-button").style.removeProperty("display");
+                        document.querySelector(".show-winner-button").style.removeProperty("display");
                         availableLeagues();
                     }, 1700)
                 }
@@ -217,9 +229,16 @@
                     localStorage.setItem("lastOrg", name)
                 };
                                 const svg = document.querySelector("#org-title").getElementsByTagName("svg")[0].outerHTML;
-                                document.querySelector("#org-title").classList.remove("loading")
+                                document.querySelector("#org-title").classList.remove("loading");
+                                document.querySelector("#org-title").dataset.name = name;
                 document.querySelector("#org-title").innerHTML = `${svg} ${name.split("2")[0]}`;
                 const json = JSON.parse(data)[name];
+                let winner = json.winner;
+                if(json.winner === null){
+                    winner = "There is no winner yet!"
+                }
+                document.querySelector(".show-winner span").innerHTML = winner;
+                document.querySelector(".show-winner h2").innerHTML = `${name} Winner`;
                         document.querySelector(".leaderboard-container").innerHTML = `
                 <div class="leaderboard-header">
                 <span class="rank">#</span>
@@ -232,6 +251,7 @@
             </div>`
                 for (let index = 0; index < Object.keys(json).length; index++) {
                     const element = Object.values(json)[index];
+                    if(Object.keys(json)[index] === "winner") return;
                     let rank = "";
                     if (index === 0) {
                         rank = "first"
@@ -361,7 +381,19 @@
         return wholeWord;
     }
     window.onload = isPhone;
-    window.onload = storeIp
+    window.onload = storeIp;
+
+    //show winner
+
+    function showWinner() {
+            document.querySelector(".leaderboard").classList.add("blur");
+    document.querySelector(".notification-button").classList.add("blur");
+    document.querySelector(".show-winner-button").classList.add("blur");
+    $(".show-winner").fadeIn("fast");
+    setTimeout(() => {
+        document.addEventListener("click", outsideCheck);
+    }, 500);
+    }
 </script>
 <script src="js/notification-register.js"></script>
 <script src="js/service-worker.js"></script>

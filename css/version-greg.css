@@ -522,3 +522,77 @@ body {
 .loading {
   user-select: none;
 }
+
+/* WINNER BUTTON */
+
+.show-winner-button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  transition: filter 0.2s ease-in-out;
+  margin-left: 8px;
+  margin-top: 8px;
+}
+
+#show-winner-btn {
+  border-radius: 50%;
+  padding: 5px;
+  background-color: #141414;
+  border: 2px solid white;
+  transition: background-color 1s;
+}
+
+#show-winner-btn:hover,
+#show-winner-btn:active {
+  background-color: #ad9b64;
+  transition: background-color 1s;
+}
+
+/* winner panel */
+
+.show-winner {
+  display: flex;
+  flex-direction: column;
+  width: max-content;
+  background-color: #0D1117;
+  justify-content: center;
+  border-radius: 5px;
+  z-index: 1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px;
+  align-items: center;
+}
+
+.show-winner h2 {
+  color: white;
+  margin: 0;
+  align-self: center;
+  margin-bottom: 5px;
+  font-size: 18px;
+  text-align: center;
+  padding: 0;
+}
+
+.show-winner hr {
+      width: 100%;
+    height: 2px;
+    background-color: white;
+    border: none;
+    margin: 0;
+}
+.show-winner span {
+  background-color: transparent;
+  padding: 10px;
+  color: white;
+  display: flex;
+  position: relative;
+  gap: 5px;
+  margin: 2px;
+  cursor: pointer;
+  font-size: 14px;
+  justify-self: center;
+}
