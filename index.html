@@ -2,7 +2,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta name="HandheldFriendly" content="true" />
     <title>MIKENUG FC</title>
     <link rel="stylesheet" href="./css/version-greg.css" />
@@ -52,7 +52,7 @@
         </button>
     </div>
 
-        <div class="show-winner-button" style="display: none;">
+        <div class="show-winner-button loading" style="display: none;">
         <button id="show-winner-btn" onclick="showWinner()"><img src="/imgs/medal-star-svgrepo-com.svg" alt="Winner"
                 width="35px">
         </button>
@@ -139,7 +139,7 @@
 </body>
 
 <script>
-    let link = "http://192.168.1.13:8080"//"https://mikenug-server-new.onrender.com";
+    let link = "https://mikenug-server-new.onrender.com";
     function loading() {
         if (connect() === "READY") {
             setTimeout(() => {
@@ -230,6 +230,7 @@
                 };
                                 const svg = document.querySelector("#org-title").getElementsByTagName("svg")[0].outerHTML;
                                 document.querySelector("#org-title").classList.remove("loading");
+                                document.querySelector(".show-winner-button").classList.remove("loading");
                                 document.querySelector("#org-title").dataset.name = name;
                 document.querySelector("#org-title").innerHTML = `${svg} ${name.split("2")[0]}`;
                 const json = JSON.parse(data)[name];

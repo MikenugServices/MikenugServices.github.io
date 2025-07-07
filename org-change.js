@@ -47,6 +47,8 @@ function changeLeague(e) {
             <div class="leaderboard-row skeleton"></div>`
         doc.innerHTML = `${svg} ${orgName.split("2")[0]}`;
         doc.dataset.name = orgName;
+                                        document.querySelector("#org-title").classList.add("loading");
+                                document.querySelector(".show-winner-button").classList.add("loading");
         setTimeout(() => {
             loadTeams();
         // fetch(`${linko}/getLeague`)

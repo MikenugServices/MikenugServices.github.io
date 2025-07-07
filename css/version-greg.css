@@ -521,6 +521,7 @@ body {
 
 .loading {
   user-select: none;
+  pointer-events: none;
 }
 
 /* WINNER BUTTON */
