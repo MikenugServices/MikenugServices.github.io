@@ -16,7 +16,7 @@
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="MIKENUG APP" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <meta name="theme-color" content="#141414">
 </head>
 
@@ -52,7 +52,7 @@
         </button>
     </div>
 
-        <div class="show-winner-button loading" style="display: none;">
+    <div class="show-winner-button loading" style="display: none;">
         <button id="show-winner-btn" onclick="showWinner()"><img src="/imgs/medal-star-svgrepo-com.svg" alt="Winner"
                 width="35px">
         </button>
@@ -77,8 +77,8 @@
         <div class="league-image" style="display: none;" id="league-image">
             <img src="/imgs/athens-league.webp" alt="Athens League">
         </div>
-        <h2 id="org-title" class="loading"><svg width="24px" height="24px" viewBox="0 0 1024 1024" class="icon" version="1.1"
-                xmlns="http://www.w3.org/2000/svg" fill="#000000">
+        <h2 id="org-title" class="loading"><svg width="24px" height="24px" viewBox="0 0 1024 1024" class="icon"
+                version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#000000">
                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                 <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
                 <g id="SVGRepo_iconCarrier">
@@ -131,7 +131,7 @@
         <h2>Leagues</h2>
         <span></span>
     </div>
-        <div class="show-winner" style="display: none;">
+    <div class="show-winner" style="display: none;">
         <h2>Winner</h2>
         <hr>
         <span></span>
@@ -141,12 +141,12 @@
 <script>
     let link = "https://mikenug-server-new.onrender.com";
     function loading() {
-        if (connect() === "READY") {
-            setTimeout(() => {
-                const loadingScreen = document.getElementById("loading");
-                loadingScreen.className = `${loadingScreen.className} hidden`
-            }, 1500)
-        };
+        connect()
+        // connect().then((m) => {
+        //     $("#loading").fadeOut("fast")
+        //         // const loadingScreen = document.getElementById("loading");
+        //         // loadingScreen.className = `${loadingScreen.className} hidden`
+        // })
     }
     function isPhone() {
         return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
@@ -159,7 +159,7 @@
         loading();
     }
     let retryInt;
-    function connect() {
+    async function connect() {
         fetch(`${link}/`)
             .then((response) => response.text())
             .then(async (status) => {
@@ -169,10 +169,11 @@
                     console.log("Ignoring undefined interval");
                 }
                 if (status === "Servers Up") {
-                        loadTeams()
+                    loadTeams()
                     // loadTeams();
                     // document.querySelector(".leaderboard").style.removeProperty("display");
                     setTimeout(() => {
+                        $("#loading").fadeOut("fast", () => {
                         const leaderboard = document.getElementById("leaderboard");
                         const leagueImage = document.getElementById("league-image");
                         // const buttonContainer = document.getElementById("button-container");
@@ -188,7 +189,8 @@
                         document.querySelector(".notification-button").style.removeProperty("display");
                         document.querySelector(".show-winner-button").style.removeProperty("display");
                         availableLeagues();
-                    }, 1700)
+                        });
+                    }, 2000)
                 }
             })
             .catch((e) => {
@@ -224,23 +226,23 @@
             .then(response => response.text())
             .then(async (data) => {
                 let name = localStorage.getItem("lastOrg");
-                if(!name) {
+                if (!name) {
                     name = "Athens Cup Youth A' 2025"
                     localStorage.setItem("lastOrg", name)
                 };
-                                const svg = document.querySelector("#org-title").getElementsByTagName("svg")[0].outerHTML;
-                                document.querySelector("#org-title").classList.remove("loading");
-                                document.querySelector(".show-winner-button").classList.remove("loading");
-                                document.querySelector("#org-title").dataset.name = name;
+                const svg = document.querySelector("#org-title").getElementsByTagName("svg")[0].outerHTML;
+                document.querySelector("#org-title").classList.remove("loading");
+                document.querySelector(".show-winner-button").classList.remove("loading");
+                document.querySelector("#org-title").dataset.name = name;
                 document.querySelector("#org-title").innerHTML = `${svg} ${name.split("2")[0]}`;
                 const json = JSON.parse(data)[name];
                 let winner = json.winner;
-                if(json.winner === null){
+                if (json.winner === null) {
                     winner = "There is no winner yet!"
                 }
                 document.querySelector(".show-winner span").innerHTML = winner;
                 document.querySelector(".show-winner h2").innerHTML = `${name} Winner`;
-                        document.querySelector(".leaderboard-container").innerHTML = `
+                document.querySelector(".leaderboard-container").innerHTML = `
                 <div class="leaderboard-header">
                 <span class="rank">#</span>
                 <span class="name">Team</span>
@@ -252,7 +254,7 @@
             </div>`
                 for (let index = 0; index < Object.keys(json).length; index++) {
                     const element = Object.values(json)[index];
-                    if(Object.keys(json)[index] === "winner") return;
+                    if (Object.keys(json)[index] === "winner") return;
                     let rank = "";
                     if (index === 0) {
                         rank = "first"
@@ -387,13 +389,13 @@
     //show winner
 
     function showWinner() {
-            document.querySelector(".leaderboard").classList.add("blur");
-    document.querySelector(".notification-button").classList.add("blur");
-    document.querySelector(".show-winner-button").classList.add("blur");
-    $(".show-winner").fadeIn("fast");
-    setTimeout(() => {
-        document.addEventListener("click", outsideCheck);
-    }, 500);
+        document.querySelector(".leaderboard").classList.add("blur");
+        document.querySelector(".notification-button").classList.add("blur");
+        document.querySelector(".show-winner-button").classList.add("blur");
+        $(".show-winner").fadeIn("fast");
+        setTimeout(() => {
+            document.addEventListener("click", outsideCheck);
+        }, 500);
     }
 </script>
 <script src="js/notification-register.js"></script>
