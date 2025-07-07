@@ -190,14 +190,14 @@
                         document.querySelector(".show-winner-button").style.removeProperty("display");
                         availableLeagues();
                         });
-                    }, 2000)
+                    }, 1000)
                 }
             })
             .catch((e) => {
                 console.error("Server offline!");
-                setTimeout(() => {
+                    $("#loading").fadeOut("fast", () => {
                     document.getElementById("offline-screen").style.display = "flex";
-                }, 1500)
+                    });
                 retryInt = setInterval(function () {
                     fetch(`${link}/`)
                         .then((response) => response.text())
