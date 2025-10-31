@@ -228,7 +228,7 @@
             .then(async (data) => {
                 let name = localStorage.getItem("lastOrg");
                 if (!name) {
-                    name = "Athens Cup Youth A' 2025"
+                    name = "Youth League A' 2025-2026"
                     localStorage.setItem("lastOrg", name)
                 };
                 const svg = document.querySelector("#org-title").getElementsByTagName("svg")[0].outerHTML;
@@ -402,5 +402,6 @@
 <script src="js/notification-register.js"></script>
 <script src="js/service-worker.js"></script>
 <script src="org-change.js"></script>
+
 
 </html>
